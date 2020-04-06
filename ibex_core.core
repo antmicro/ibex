@@ -39,6 +39,9 @@ filesets:
   files_lint:
     depend:
       - lowrisc:ibex:sim_shared
+    files:
+      - rules
+    file_type: linterRules
 
   files_lint_verilator:
     files:

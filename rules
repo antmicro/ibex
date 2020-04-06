@@ -1,0 +1,11 @@
+-explicit-task-lifetime
+-explicit-function-lifetime
+-explicit-parameter-storage-type
+-unpacked-dimensions-range-ordering
+-generate-label
+-line-length
+-no-trailing-spaces
+-module-filename
+-undersized-binary-literal
+-struct-union-name-style
+-case-missing-default
