@@ -43,7 +43,7 @@ module ibex_alu #(
   logic [32:0] adder_in_a, adder_in_b;
   logic [31:0] adder_result;
 
-  always_comb begin
+  always @* begin
     adder_op_b_negate = 1'b0;
     unique case (operator_i)
       // Adder OPs
