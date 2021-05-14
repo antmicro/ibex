@@ -1,0 +1,53 @@
+CAPI=2:
+# Copyright Antmicro.
+name: "antmicro:ibex:top_ulx3s:0.1"
+description: "Ibex example toplevel for ulx3s board"
+filesets:
+  files_rtl_ulx3s:
+    depend:
+      - lowrisc:ibex:ibex_top
+      - antmicro:ibex:fpga_lattice_ecp5_shared
+    files:
+      - rtl/top_ulx3s.sv
+    file_type: systemVerilogSource
+
+  files_constraints:
+    files:
+      - data/pins_ulx3s.lpf
+    file_type: LPF
+
+parameters:
+  # XXX: This parameter needs to be absolute, or relative to the *.runs/synth_1
+  # directory. It's best to pass it as absolute path when invoking fusesoc, e.g.
+  # --SRAMInitFile=$PWD/sw/led/led.vmem
+  # XXX: The VMEM file should be added to the sources of the Project Trellis project to
+  # make its dependency tracking work. However this requires changes to
+  # fusesoc first.
+  SRAMInitFile:
+    datatype: str
+    description: SRAM initialization file in vmem hex format
+    default: "../../../../../examples/sw/led/led.vmem"
+    paramtype: vlogparam
+
+  # For value definition, please see ip/prim/rtl/prim_pkg.sv
+  PRIM_DEFAULT_IMPL:
+    datatype: str
+    paramtype: vlogdefine
+    description: Primitives implementation to use, e.g. "prim_pkg::ImplGeneric".
+
+targets:
+  synth:
+    default_tool: trellis
+    filesets:
+      - files_rtl_ulx3s
+      - files_constraints
+    toplevel: top_ulx3s
+    parameters:
+      - SRAMInitFile
+      - PRIM_DEFAULT_IMPL=prim_pkg::ImplLattice_ecp5
+    tools:
+      trellis:
+        nextpnr_options: ['--85k','--speed 6','--freq 30','--package CABGA381']
+        yosys_synth_options: ['-run :check', "frontend=surelog"]
+        yosys_read_options: ['-DPRIM_DEFAULT_IMPL=prim_pkg::ImplLattice_ecp5','-noassert']
+        surelog_options: ['--disable-feature=parametersubstitution', '-DSYNTHESIS']

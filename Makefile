@@ -79,6 +79,14 @@ program-arty:
 	fusesoc --cores-root=. run --target=synth --run \
 		lowrisc:ibex:top_artya7
 
+# ulx3s FPGA example
+# Use the following target:
+# - "build-ulx3s"
+# - "program-ulx3s"
+.PHONY: build-ulx3s
+build-ulx3s: sw-led
+	fusesoc --cores-root=. run --target=synth --setup --build \
+		antmicro:ibex:top_ulx3s
 
 # Lint check
 .PHONY: lint-core-tracing

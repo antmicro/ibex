@@ -1,0 +1,15 @@
+CAPI=2:
+# Copyright Antmicro.
+name: "antmicro:ibex:fpga_lattice_ecp5_shared"
+description: "Collection of useful RTL for Lattice ECP5 based examples"
+filesets:
+  files_sv:
+    files:
+      - rtl/fpga/lattice/clkgen_ecp5.sv
+      - rtl/ram_1p.sv
+    file_type: systemVerilogSource
+
+targets:
+  default:
+    filesets:
+      - files_sv

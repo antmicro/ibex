@@ -28,6 +28,10 @@ module prim_clock_gating (
     prim_xilinx_clock_gating u_impl_xilinx (
       .*
     );
+  end else if (Impl == prim_pkg::ImplLattice_ecp5) begin : gen_lattice_ecp5
+    prim_lattice_ecp5_clock_gating u_impl_lattice_ecp5 (
+      .*
+    );
   end else begin : gen_failure
     // TODO: Find code that works across tools and causes a compile failure
   end
