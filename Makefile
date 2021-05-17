@@ -86,7 +86,7 @@ program-arty:
 .PHONY: build-ulx3s
 build-ulx3s: sw-led
 	fusesoc --cores-root=. run --target=synth --setup --build \
-		antmicro:ibex:top_ulx3s
+		lowrisc:ibex:top_ulx3s
 
 # Lint check
 .PHONY: lint-core-tracing

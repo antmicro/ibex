@@ -1,12 +1,14 @@
 CAPI=2:
-# Copyright Antmicro.
-name: "antmicro:ibex:top_ulx3s:0.1"
+# Copyright lowRISC contributors.
+# Licensed under the Apache License, Version 2.0, see LICENSE for details.
+# SPDX-License-Identifier: Apache-2.0
+name: "lowrisc:ibex:top_ulx3s:0.1"
 description: "Ibex example toplevel for ulx3s board"
 filesets:
   files_rtl_ulx3s:
     depend:
       - lowrisc:ibex:ibex_top
-      - antmicro:ibex:fpga_lattice_ecp5_shared
+      - lowrisc:ibex:fpga_lattice_ecp5_shared
     files:
       - rtl/top_ulx3s.sv
     file_type: systemVerilogSource
