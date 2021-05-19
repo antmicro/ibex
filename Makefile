@@ -18,7 +18,7 @@ build-all: build-riscv-compliance build-simple-system build-arty-100 \
 # RISC-V compliance
 .PHONY: build-riscv-compliance
 build-riscv-compliance:
-	fusesoc --cores-root=. run --target=sim --setup --build \
+	$(TOOLCHAIN_LAUNCHER) fusesoc --cores-root=. run --target=sim --setup --build \
 		lowrisc:ibex:ibex_riscv_compliance \
 		$(FUSESOC_CONFIG_OPTS)
 
@@ -29,7 +29,7 @@ build-riscv-compliance:
 # - "run-simple-system"
 .PHONY: build-simple-system
 build-simple-system:
-	fusesoc --cores-root=. run --target=sim --setup --build \
+	$(TOOLCHAIN_LAUNCHER) fusesoc --cores-root=. run --target=sim --setup --build \
 		lowrisc:ibex:ibex_simple_system \
 		$(FUSESOC_CONFIG_OPTS)
 
@@ -66,17 +66,17 @@ $(arty-sw-program):
 
 .PHONY: build-arty-35
 build-arty-35: sw-led
-	fusesoc --cores-root=. run --target=synth --setup --build \
+	$(TOOLCHAIN_LAUNCHER) fusesoc --cores-root=. run --target=synth --setup --build \
 		lowrisc:ibex:top_artya7 --part xc7a35ticsg324-1L
 
 .PHONY: build-arty-100
 build-arty-100: sw-led
-	fusesoc --cores-root=. run --target=synth --setup --build \
+	$(TOOLCHAIN_LAUNCHER) fusesoc --cores-root=. run --target=synth --setup --build \
 		lowrisc:ibex:top_artya7 --part xc7a100tcsg324-1
 
 .PHONY: program-arty
 program-arty:
-	fusesoc --cores-root=. run --target=synth --run \
+	$(TOOLCHAIN_LAUNCHER) fusesoc --cores-root=. run --target=synth --run \
 		lowrisc:ibex:top_artya7
 
 # ulx3s FPGA example
@@ -85,13 +85,13 @@ program-arty:
 # - "program-ulx3s"
 .PHONY: build-ulx3s
 build-ulx3s: sw-led
-	fusesoc --cores-root=. run --target=synth --setup --build \
+	$(TOOLCHAIN_LAUNCHER) fusesoc --cores-root=. run --target=synth --setup --build \
 		lowrisc:ibex:top_ulx3s
 
 # Lint check
 .PHONY: lint-core-tracing
 lint-core-tracing:
-	fusesoc --cores-root . run --target=lint lowrisc:ibex:ibex_core_tracing \
+	$(TOOLCHAIN_LAUNCHER) fusesoc --cores-root . run --target=lint lowrisc:ibex:ibex_core_tracing \
 		$(FUSESOC_CONFIG_OPTS)
 
 
@@ -101,7 +101,7 @@ lint-core-tracing:
 # - "run-csr-test"
 .PHONY: build-csr-test
 build-csr-test:
-	fusesoc --cores-root=. run --target=sim --setup --build \
+	$(TOOLCHAIN_LAUNCHER) fusesoc --cores-root=. run --target=sim --setup --build \
 	      --tool=verilator lowrisc:ibex:tb_cs_registers
 Vtb_cs_registers = \
       build/lowrisc_ibex_tb_cs_registers_0/sim-verilator/Vtb_cs_registers
@@ -112,7 +112,7 @@ $(Vtb_cs_registers):
 
 .PHONY: run-csr-test
 run-csr-test: | $(Vtb_cs_registers)
-	fusesoc --cores-root=. run --target=sim --run \
+	$(TOOLCHAIN_LAUNCHER) fusesoc --cores-root=. run --target=sim --run \
 	      --tool=verilator lowrisc:ibex:tb_cs_registers
 
 # Echo the parameters passed to fusesoc for the chosen IBEX_CONFIG

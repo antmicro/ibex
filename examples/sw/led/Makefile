@@ -28,10 +28,10 @@ OUTFILES = $(PROGRAM).elf $(PROGRAM).vmem $(PROGRAM).bin $(PROGRAM).dis
 all: $(OUTFILES)
 
 $(PROGRAM).elf: $(OBJS) $(LINKER_SCRIPT)
-	$(CC) $(CFLAGS) -T $(LINKER_SCRIPT) $(OBJS) -o $@ $(LIBS)
+	$(TOOLCHAIN_LAUNCHER) $(CC) $(CFLAGS) -T $(LINKER_SCRIPT) $(OBJS) -o $@ $(LIBS)
 
 %.dis: %.elf
-	$(OBJDUMP) -SD $^ > $@
+	$(TOOLCHAIN_LAUNCHER) $(OBJDUMP) -SD $^ > $@
 
 # Note: this target requires the srecord package to be installed.
 # XXX: This could be replaced by objcopy once
@@ -44,13 +44,13 @@ $(PROGRAM).elf: $(OBJS) $(LINKER_SCRIPT)
 	srec_cat $^ -binary -offset 0x0000 -byte-swap 4 -o $@ -vmem
 
 %.bin: %.elf
-	$(OBJCOPY) -O binary $^ $@
+	$(TOOLCHAIN_LAUNCHER) $(OBJCOPY) -O binary $^ $@
 
 %.o: %.c
-	$(CC) $(CFLAGS) -MMD -c $(INCS) -o $@ $<
+	$(TOOLCHAIN_LAUNCHER) $(CC) $(CFLAGS) -MMD -c $(INCS) -o $@ $<
 
 %.o: %.S
-	$(CC) $(CFLAGS) -MMD -c $(INCS) -o $@ $<
+	$(TOOLCHAIN_LAUNCHER) $(CC) $(CFLAGS) -MMD -c $(INCS) -o $@ $<
 
 clean:
 	$(RM) -f *.o *.d
