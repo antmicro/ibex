@@ -56,8 +56,12 @@ class ToolReq:
         self.optional = False
 
     def _get_tool_cmd(self):
+        cmd = self.tool_cmd or [self.tool, '--version']
+        edalize_launcher = os.getenv("EDALIZE_LAUNCHER")
+        if edalize_launcher:
+            cmd = [edalize_launcher] + cmd
         '''Return the command to run to get the installed version'''
-        return self.tool_cmd or [self.tool, '--version']
+        return cmd
 
     def _get_version(self):
         '''Run the tool to get the installed version.
@@ -197,7 +201,11 @@ class VerilatorToolReq(ToolReq):
             # Note: "verilator" needs to be called through a shell and with all
             # arguments in a string, as it doesn't have a shebang, but instead
             # relies on perl magic to parse command line arguments.
-            version_str = subprocess.run('verilator --version', shell=True,
+            edalize_launcher = os.getenv("EDALIZE_LAUNCHER")
+            cmd = 'verilator --version'
+            if edalize_launcher:
+                cmd = edalize_launcher+" "+cmd
+            version_str = subprocess.run(cmd, shell=True,
                                          check=True, stdout=subprocess.PIPE,
                                          stderr=subprocess.STDOUT,
                                          universal_newlines=True)
