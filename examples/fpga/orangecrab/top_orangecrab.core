@@ -2,20 +2,20 @@ CAPI=2:
 # Copyright lowRISC contributors.
 # Licensed under the Apache License, Version 2.0, see LICENSE for details.
 # SPDX-License-Identifier: Apache-2.0
-name: "lowrisc:ibex:top_ulx3s:0.1"
-description: "Ibex example toplevel for ulx3s board"
+name: "lowrisc:ibex:top_orangecrab:0.1"
+description: "Ibex example toplevel for orangecrab board"
 filesets:
-  files_rtl_ulx3s:
+  files_rtl_orangecrab:
     depend:
       - lowrisc:ibex:ibex_top
       - lowrisc:ibex:fpga_lattice_ecp5_shared
     files:
-      - rtl/top_ulx3s.sv
+      - rtl/top_orangecrab.sv
     file_type: systemVerilogSource
 
   files_constraints:
     files:
-      - data/pins_ulx3s.lpf
+      - data/pins_orangecrab.lpf
     file_type: LPF
 
 parameters:
@@ -41,15 +41,15 @@ targets:
   synth:
     default_tool: trellis
     filesets:
-      - files_rtl_ulx3s
+      - files_rtl_orangecrab
       - files_constraints
-    toplevel: top_ulx3s
+    toplevel: top_orangecrab
     parameters:
       - SRAMInitFile
       - PRIM_DEFAULT_IMPL=prim_pkg::ImplLattice_ecp5
     tools:
       trellis:
-        nextpnr_options: ['--85k','--speed 6','--freq 30','--package CABGA381']
+        nextpnr_options: ['--85k','--speed 6','--freq 30','--package CSFBGA285', '--seed 42']
         yosys_synth_options: ['-run :check', "frontend=surelog"]
         yosys_read_options: ['-DPRIM_DEFAULT_IMPL=prim_pkg::ImplLattice_ecp5','-noassert']
         surelog_options: ['--disable-feature=parametersubstitution', '-DSYNTHESIS']

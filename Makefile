@@ -82,11 +82,18 @@ program-arty:
 # ulx3s FPGA example
 # Use the following target:
 # - "build-ulx3s"
-# - "program-ulx3s"
 .PHONY: build-ulx3s
 build-ulx3s: sw-led
 	$(TOOLCHAIN_LAUNCHER) fusesoc --cores-root=. run --target=synth --setup --build \
 		lowrisc:ibex:top_ulx3s
+
+# orangecrab FPGA example
+# Use the following target:
+# - "build-orangecrab"
+.PHONY: build-orangecrab
+build-orangecrab: sw-led
+	$(TOOLCHAIN_LAUNCHER) fusesoc --cores-root=. run --target=synth --setup --build \
+		lowrisc:ibex:top_orangecrab
 
 # Lint check
 .PHONY: lint-core-tracing

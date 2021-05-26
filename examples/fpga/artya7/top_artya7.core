@@ -50,3 +50,20 @@ targets:
     tools:
       vivado:
         part: "xc7a100tcsg324-1"  # Default to Arty A7-100
+  synth_surelog:
+    default_tool: vivado
+    filesets:
+      - files_rtl_artya7
+      - files_constraints
+    toplevel: top_artya7
+    parameters:
+      - SRAMInitFile
+      - PRIM_DEFAULT_IMPL=prim_pkg::ImplXilinx
+    tools:
+      vivado:
+        part: "xc7a100tcsg324-1"  # Default to Arty A7-100
+        synth: "yosys"
+        yosys_synth_options: ['-iopad', '-family xc7', '-run :check', "frontend=sv2v"]
+        yosys_read_options: ['-DPRIM_DEFAULT_IMPL=prim_pkg::ImplXilinx','-noassert','-defer']
+        frontend_options: ['--write=adjacent', '-DSYNTHESIS']
+#        frontend_options: ['--disable-feature=parametersubstitution', '-DSYNTHESIS']

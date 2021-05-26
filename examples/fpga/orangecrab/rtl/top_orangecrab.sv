@@ -2,18 +2,22 @@
 // Licensed under the Apache License, Version 2.0, see LICENSE for details.
 // SPDX-License-Identifier: Apache-2.0
 
-module top_artya7 (
-    input               IO_CLK,
-    input               IO_RST_N,
-    output [3:0]        LED
+module top_orangecrab (
+    input               clk48,
+    input               usr_btn,
+    output              rgb_led0_r,
+    output              rgb_led0_g,
+    output              rgb_led0_b,
+    output [12:0]       gpio0
 );
 
   parameter int          MEM_SIZE     = 64 * 1024; // 64 kB
   parameter logic [31:0] MEM_START    = 32'h00000000;
   parameter logic [31:0] MEM_MASK     = MEM_SIZE-1;
-  parameter [8*100:1]    SRAMInitFile = "";
+  parameter              SRAMInitFile = "";
 
-  logic clk_sys, rst_sys_n;
+  logic clk_sys, rst_sys_n, reset_n;
+  logic minor, major;
 
   // Instruction connection to SRAM
   logic        instr_req;
@@ -50,7 +54,7 @@ module top_artya7 (
      .clk_i                 (clk_sys),
      .rst_ni                (rst_sys_n),
 
-     .test_en_i             ('b0),
+     .test_en_i             ('b1),
      .scan_rst_ni           (1'b1),
      .ram_cfg_i             ('b0),
 
@@ -85,8 +89,8 @@ module top_artya7 (
      .crash_dump_o          (),
 
      .fetch_enable_i        ('b1),
-     .alert_minor_o         (),
-     .alert_major_o         (),
+     .alert_minor_o         (minor),
+     .alert_major_o         (major),
      .core_sleep_o          ()
   );
 
@@ -141,6 +145,13 @@ module top_artya7 (
     end
   end
 
+  assign gpio0[0] = clk_sys;
+  assign gpio0[1] = instr_rvalid;
+  assign gpio0[2] = instr_rdata[12];
+  assign gpio0[3] = instr_rdata[13];
+  assign gpio0[4] = instr_rdata[14];
+  assign gpio0[5] = instr_rdata[15];
+
   // Connect the LED output to the lower four bits of the most significant
   // byte
   logic [3:0] leds;
@@ -157,15 +168,23 @@ module top_artya7 (
       end
     end
   end
-  assign LED = leds;
+
+  assign rgb_led0_g = leds[1];
 
   // Clock and reset
-  clkgen_xil7series
-    clkgen(
-      .IO_CLK,
-      .IO_RST_N,
-      .clk_sys,
-      .rst_sys_n
+  clkgen_lattice_ecp5 #(
+      .clki_div(2),
+      .clkop_div(25),
+      .clkos_div(20)
+    )clkgen(
+      .clk_in(clk48),
+      .reset_n(reset_n),
+      .clk_sys(clk_sys),
+      .rst_sys_n(rst_sys_n)
     );
+
+  assign gpio0[6] = rst_sys_n;
+
+  assign reset_n = usr_btn;
 
 endmodule
