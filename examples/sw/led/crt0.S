@@ -1,6 +1,9 @@
   .section .text
 
 default_exc_handler:
+  li x1, 0xa
+  la  x2, _stack_start
+  sb  x1, 0(x2)
   jal x0, default_exc_handler
 
 reset_handler:

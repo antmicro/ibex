@@ -52,4 +52,4 @@ targets:
         nextpnr_options: ['--85k','--speed 6','--freq 30','--package CABGA381']
         yosys_synth_options: ['-run :check', "frontend=surelog"]
         yosys_read_options: ['-DPRIM_DEFAULT_IMPL=prim_pkg::ImplLattice_ecp5','-noassert']
-        surelog_options: ['--disable-feature=parametersubstitution', '-DSYNTHESIS']
+        frontend_options: ['--disable-feature=parametersubstitution', '-DSYNTHESIS']
