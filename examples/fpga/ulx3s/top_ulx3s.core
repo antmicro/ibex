@@ -53,3 +53,18 @@ targets:
         yosys_synth_options: ['-run :check', "frontend=surelog"]
         yosys_read_options: ['-DPRIM_DEFAULT_IMPL=prim_pkg::ImplLattice_ecp5','-noassert']
         frontend_options: ['--disable-feature=parametersubstitution', '-DSYNTHESIS']
+  synth_sv2v:
+    default_tool: trellis
+    filesets:
+      - files_rtl_orangecrab
+      - files_constraints
+    toplevel: top_orangecrab
+    parameters:
+      - SRAMInitFile
+      - PRIM_DEFAULT_IMPL=prim_pkg::ImplLattice_ecp5
+    tools:
+      trellis:
+        nextpnr_options: ['--85k','--speed 6','--freq 30','--package CSFBGA285', '--seed 42']
+        yosys_synth_options: ['-run :check', "frontend=sv2v"]
+        yosys_read_options: ['-noassert']
+        frontend_options: ['--write=adjacent', '-DSYNTHESIS']
