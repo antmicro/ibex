@@ -162,10 +162,10 @@ module top_ulx3s (
   // Clock and reset
   clkgen_lattice_ecp5
     clkgen(
-      .clk_25mhz,
-      .reset_n,
-      .clk_sys,
-      .rst_sys_n
+      .clk_in(clk_25mhz),
+      .reset_n(reset_n),
+      .clk_sys(clk_sys),
+      .rst_sys_n(rst_sys_n)
     );
 
   assign reset_n = btn[0];

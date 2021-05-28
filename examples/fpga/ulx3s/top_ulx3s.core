@@ -56,15 +56,15 @@ targets:
   synth_sv2v:
     default_tool: trellis
     filesets:
-      - files_rtl_orangecrab
+      - files_rtl_ulx3s
       - files_constraints
-    toplevel: top_orangecrab
+    toplevel: top_ulx3s
     parameters:
       - SRAMInitFile
       - PRIM_DEFAULT_IMPL=prim_pkg::ImplLattice_ecp5
     tools:
       trellis:
-        nextpnr_options: ['--85k','--speed 6','--freq 30','--package CSFBGA285', '--seed 42']
+        nextpnr_options: ['--85k','--speed 6','--freq 30','--package CABGA381', '--seed 42']
         yosys_synth_options: ['-run :check', "frontend=sv2v"]
         yosys_read_options: ['-noassert']
         frontend_options: ['--write=adjacent', '-DSYNTHESIS']
