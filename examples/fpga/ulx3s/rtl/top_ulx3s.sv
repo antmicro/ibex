@@ -11,7 +11,7 @@ module top_ulx3s (
   parameter int          MEM_SIZE     = 64 * 1024; // 64 kB
   parameter logic [31:0] MEM_START    = 32'h00000000;
   parameter logic [31:0] MEM_MASK     = MEM_SIZE-1;
-  parameter              SRAMInitFile = "";
+  parameter [8*100:1]    SRAMInitFile = "";
 
   logic clk_sys, rst_sys_n, reset_n;
 
