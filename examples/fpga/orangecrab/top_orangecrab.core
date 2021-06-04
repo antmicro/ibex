@@ -49,7 +49,7 @@ targets:
       - PRIM_DEFAULT_IMPL=prim_pkg::ImplLattice_ecp5
     tools:
       trellis:
-        nextpnr_options: ['--85k','--speed 6','--freq 30','--package CSFBGA285', '--seed 42']
+        nextpnr_options: ['--85k','--speed 6','--freq 30','--package CSFBGA285','-r']
         yosys_synth_options: ['-run :check', "frontend=surelog"]
         yosys_read_options: ['-DPRIM_DEFAULT_IMPL=prim_pkg::ImplLattice_ecp5','-noassert']
         frontend_options: ['--disable-feature=parametersubstitution', '-DSYNTHESIS']
@@ -64,7 +64,7 @@ targets:
       - PRIM_DEFAULT_IMPL=prim_pkg::ImplLattice_ecp5
     tools:
       trellis:
-        nextpnr_options: ['--85k','--speed 6','--freq 30','--package CSFBGA285', '--seed 42']
+        nextpnr_options: ['--85k','--speed 6','--freq 30','--package CSFBGA285','-r']
         yosys_synth_options: ['-run :check', "frontend=sv2v"]
-        yosys_read_options: ['-noassert']
+        yosys_read_options: ['-noassert','-defer']
         frontend_options: ['--write=adjacent', '-DSYNTHESIS']

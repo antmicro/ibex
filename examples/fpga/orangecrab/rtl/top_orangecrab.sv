@@ -14,7 +14,7 @@ module top_orangecrab (
   parameter int          MEM_SIZE     = 64 * 1024; // 64 kB
   parameter logic [31:0] MEM_START    = 32'h00000000;
   parameter logic [31:0] MEM_MASK     = MEM_SIZE-1;
-  parameter [8*100:1]    SRAMInitFile = "";
+  parameter [800:1]      SRAMInitFile = "";
 
   logic clk_sys, rst_sys_n, reset_n;
   logic minor, major;
@@ -54,7 +54,7 @@ module top_orangecrab (
      .clk_i                 (clk_sys),
      .rst_ni                (rst_sys_n),
 
-     .test_en_i             ('b1),
+     .test_en_i             ('b0),
      .scan_rst_ni           (1'b1),
      .ram_cfg_i             ('b0),
 
@@ -162,7 +162,12 @@ module top_orangecrab (
     end
   end
 
-  assign gpio0 = leds;
+  assign rgb_led0_r = leds[0];
+  assign rgb_led0_g = leds[1];
+  assign rgb_led0_b = leds[2];
+
+  assign gpio0[3:0] = leds;
+  assign gpio0[4] = clk_sys;
 
   // Clock and reset
   clkgen_lattice_ecp5 #(

@@ -82,3 +82,19 @@ targets:
         yosys_synth_options: ['-iopad', '-family xc7', '-run :check', "frontend=sv2v"]
         yosys_read_options: ['-noassert']
         frontend_options: ['--write=adjacent', '-DSYNTHESIS']
+  synth_surelog_sv2v:
+    default_tool: vivado
+    filesets:
+      - files_rtl_artya7
+      - files_constraints
+    toplevel: top_artya7
+    parameters:
+      - SRAMInitFile
+      - PRIM_DEFAULT_IMPL=prim_pkg::ImplXilinx
+    tools:
+      vivado:
+        part: "xc7a100tcsg324-1"  # Default to Arty A7-100
+        synth: "yosys"
+        yosys_synth_options: ['-iopad', '-family xc7', '-run :check', "frontend=surelog+sv2v", "path"]
+        yosys_read_options: ['-noassert']
+        frontend_options: ['--write=adjacent', '-DSYNTHESIS']
