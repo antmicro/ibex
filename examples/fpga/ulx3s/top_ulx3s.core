@@ -38,7 +38,7 @@ parameters:
     description: Primitives implementation to use, e.g. "prim_pkg::ImplGeneric".
 
 targets:
-  synth:
+  synth_surelog:
     default_tool: trellis
     filesets:
       - files_rtl_ulx3s
