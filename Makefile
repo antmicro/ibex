@@ -66,7 +66,7 @@ $(arty-sw-program):
 
 .PHONY: build-arty-35
 build-arty-35: sw-led
-	$(TOOLCHAIN_LAUNCHER) fusesoc --cores-root=. run --target=synth --setup --build \
+	$(TOOLCHAIN_LAUNCHER) fusesoc --cores-root=. run --target=synth_surelog --setup --build \
 		lowrisc:ibex:top_artya7 --part xc7a35ticsg324-1L
 
 .PHONY: build-arty-100
@@ -84,7 +84,7 @@ program-arty:
 # - "build-ulx3s"
 .PHONY: build-ulx3s
 build-ulx3s: sw-led
-	$(TOOLCHAIN_LAUNCHER) fusesoc --cores-root=. run --target=synth_sv2v --setup --build \
+	$(TOOLCHAIN_LAUNCHER) fusesoc --cores-root=. run --target=synth_surelog --setup --build \
 		lowrisc:ibex:top_ulx3s
 
 # orangecrab FPGA example
@@ -92,7 +92,7 @@ build-ulx3s: sw-led
 # - "build-orangecrab"
 .PHONY: build-orangecrab
 build-orangecrab: sw-led
-	$(TOOLCHAIN_LAUNCHER) fusesoc --cores-root=. run --target=synth_sv2v --setup --build \
+	$(TOOLCHAIN_LAUNCHER) fusesoc --cores-root=. run --target=synth_surelog --setup --build \
 		lowrisc:ibex:top_orangecrab
 
 # Lint check
